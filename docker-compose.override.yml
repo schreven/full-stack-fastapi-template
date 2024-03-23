@@ -52,6 +52,7 @@ services:
     restart: "no"
     ports:
       - "8888:8888"
+      - "4444:4444"
     volumes:
       - ./backend/:/app
     build:
@@ -63,10 +64,12 @@ services:
 
   frontend:
     restart: "no"
+    ports:
+      - "4445:80"
     build:
       context: ./frontend
       args:
-        - VITE_API_URL=http://${DOMAIN?Variable not set}
+        - VITE_API_URL=http://${DOMAIN?Variable not set}:${PORT?Variable not set}
         - NODE_ENV=development
 
 networks:
